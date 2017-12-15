@@ -1,0 +1,28 @@
+Python program hello.py
+-------------------------------------------------------
+#hello.py
+
+from mpi4py import MPI
+
+comm = MPI.COMM_WORLD
+
+rank = comm.Get_rank()
+
+size = MPI.COMM_WORLD.Get_size()
+
+print "hello world from process ", rank, " of ",size
+-------------------------------------------------------
+
+Submit Script
+-------------------------------------------------------
+#!/bin/sh
+#SBATCH --time 5:00
+#SBATCH -o testing%j.out
+#SBATCH -e testing%j.err
+#SBATCH -p defq -n 8
+#SBATCH --mail-user=<username>@gwu.edu
+#SBATCH --mail-type=ALL
+module load openmpi/1.8/gcc/4.9.2/cpu
+module load python/2.7.6
+mpirun python /home/<username>/hello.py
+-------------------------------------------------------
